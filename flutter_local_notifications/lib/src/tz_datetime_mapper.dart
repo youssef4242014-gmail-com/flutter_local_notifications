@@ -16,14 +16,15 @@ extension TZDateTimeMapper on TZDateTime {
         (timeZoneOffset.inMicroseconds ~/ Duration.microsecondsPerHour).abs();
     final String iso8601OffsetComponent =
         '${timeZoneOffset.isNegative ? '-' : '+'}${twoDigits(offsetHoursComponent)}$offsetMinutesComponent'; // ignore: lines_longer_than_80_chars
-    final String iso8601DateComponent = toIso8601String();
-    // .split('.')[0]
-    // .replaceAll(iso8601OffsetComponent, '')
-    // .replaceAll('T', ' ');
+    final String iso8601DateComponent = toIso8601String()
+        .split('.')[0]
+        .replaceAll(iso8601OffsetComponent, '')
+        .replaceAll('Z', ' ');
 
     return <String, Object>{
       'timeZoneName': location.name,
       'scheduledDateTime': iso8601DateComponent,
+      'scheduledDateTimeIso8601': toIso8601String(),
     };
   }
 }
